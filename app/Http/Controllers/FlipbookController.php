@@ -34,7 +34,7 @@ class FlipbookController extends Controller
                 $image_name = md5(rand(1000, 10000));
                 $ext = strtolower($file->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'public/multiple_image/';
+                $upload_path = 'multiple_image/';
                 $image_url = $upload_path . $image_full_name;
                 $file->move($upload_path, $image_full_name);
                 $image[] = $image_url;
