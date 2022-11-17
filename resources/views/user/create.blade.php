@@ -10,6 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form method="POST" action="{{ route('users.store') }}">
                     @csrf
+                    <div>
+                        <x-input-label for="username" :value="__('Username')" />
+                        <x-text-input id="username" class="block mt-1 w-full" type="number" name="username"
+                            :value="old('username')" required autofocus />
+                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                    </div>
+
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <!-- Name -->
                         <div>

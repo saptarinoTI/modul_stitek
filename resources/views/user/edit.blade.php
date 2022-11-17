@@ -11,6 +11,12 @@
                 <form method="POST" action="{{ route('users.update', $user->id) }}">
                     @csrf
                     @method('patch')
+                    <div>
+                        <x-input-label for="username" :value="__('Username')" />
+                        <x-text-input id="username" class="block mt-1 w-full" type="number" name="username"
+                            value="{{ $user->username }}" required autofocus />
+                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                    </div>
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <!-- Name -->
                         <div>
@@ -32,7 +38,9 @@
                         <div>
                             <x-input-label for="password" :value="__('Kata Sandi')" />
                             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                :value="old('password')" required autofocus />
+                                :value="old('password')" autofocus />
+                            <input type="hidden" name="password_old" value="{{ $user->password }}">
+                            <span class="text-xs text-red-600">*Jika tidak diisi, akan menggunakan password lama!</span>
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
 

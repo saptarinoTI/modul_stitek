@@ -23,13 +23,15 @@ class UserController extends Controller
     {
         $validate = $request->validate([
             "name" => 'required',
+            "username" => 'required',
             "email" => 'required|email|unique:users,email',
             "password" => 'required',
-            "level" => 'required|in:admin,petugas',
+            "level" => 'required|in:admin,laboran',
         ]);
         if ($validate) {
             User::create([
                 'name' => htmlspecialchars(strtolower($request->name)),
+                'username' => htmlspecialchars(strtolower($request->username)),
                 'email' => htmlspecialchars(strtolower($request->email)),
                 'password' => Hash::make($request->password),
                 'level' => htmlspecialchars(strtolower($request->level)),
@@ -52,11 +54,37 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            "name" => 'required',
+            "username" => 'required',
+            "email" => 'required',
+            "level" => 'required|in:admin,laboran',
+        ]);
+        if ($request->password == null) {
+            $password = $request->password_old;
+        } else {
+            $password = $request->password;
+        }
+
+        if ($validate) {
+            $user = User::findOrFail($id);
+            $user->update([
+                'name' => htmlspecialchars(strtolower($request->name)),
+                'username' => htmlspecialchars(strtolower($request->username)),
+                'email' => htmlspecialchars(strtolower($request->email)),
+                'password' => Hash::make($password),
+                'level' => htmlspecialchars(strtolower($request->level)),
+            ]);
+            toast('Data User Login Berhasil Dirubah', 'success');
+            return redirect()->route('users.index');
+        }
     }
 
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        toast('Data User Login Berhasil Dihapuskan', 'success');
+        return redirect()->route('users.index');
     }
 }
