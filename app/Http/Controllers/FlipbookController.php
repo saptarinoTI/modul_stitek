@@ -31,11 +31,11 @@ class FlipbookController extends Controller
         $image = array();
         if ($files = $request->file('image')) {
             foreach ($files as $file) {
-                // $image_name = (rand(10, 100));
-                $image_name = strtolower($file->getClientOriginalName());
+                $image_name = 'mdl-' . (rand(100, 1000));
+                // $image_name = strtolower($file->getClientOriginalName());
                 $ext = strtolower($file->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'modul/' . $request->book_name . '/';
+                $upload_path = 'modul/';
                 $image_url = $upload_path . $image_full_name;
                 $file->move($upload_path, $image_full_name);
                 $image[] = $image_url;
