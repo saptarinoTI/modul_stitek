@@ -24,21 +24,28 @@
                             <tr>
                                 <x-th-table>NIM</x-th-table>
                                 <x-th-table>Nama</x-th-table>
+                                <x-th-table>Kelas</x-th-table>
+                                <x-th-table>TTL</x-th-table>
+                                <x-th-table>Alamat</x-th-table>
                                 <x-th-table>Aksi</x-th-table>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($mahasiswa as $mhs)
-                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                    <x-td-table>{{ ucwords($mhs->nim) }}</x-td-table>
-                                    <x-td-table>{{ ucwords($mhs->nama) }}</x-td-table>
-                                    <td class="block sm:flex gap-2">
-                                        <x-btn-detail href="{{ route('mahasiswa.show', $mhs->nim) }}" />
-                                        <x-btn-edit href="{{ route('mahasiswa.edit', $mhs->nim) }}" />
-                                        <x-btn-delete class="mt-2 sm:mt-0" method="POST"
-                                            action="{{ route('mahasiswa.destroy', $mhs->nim) }}" />
-                                    </td>
-                                </tr>
+                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <x-td-table>{{ ucwords($mhs->nim) }}</x-td-table>
+                                <x-td-table>{{ ucwords($mhs->nama) }}</x-td-table>
+                                <x-td-table>{{ ucwords($mhs->kelas) }}</x-td-table>
+                                <x-td-table>{{ ucwords($mhs->ttl) }}</x-td-table>
+                                <x-td-table>{{ ucwords($mhs->alamat) }}</x-td-table>
+                                <td class="block sm:flex gap-2">
+                                    {{--
+                                    <x-btn-detail href="{{ route('mahasiswa.show', $mhs->nim) }}" /> --}}
+                                    <x-btn-edit href="{{ route('mahasiswa.edit', $mhs->nim) }}" />
+                                    <x-btn-delete class="mt-2 sm:mt-0" method="POST"
+                                        action="{{ route('mahasiswa.destroy', $mhs->nim) }}" />
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>

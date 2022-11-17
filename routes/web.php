@@ -4,6 +4,7 @@ use App\Http\Controllers\FlipbookController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\UserController;
+use App\Models\Flipbook;
 use App\Models\Mahasiswa;
 use App\Models\Modul;
 use App\Models\User;
@@ -41,12 +42,12 @@ Route::get('/dashboard', function () {
         } elseif ($month >= 7 && $month <= 12) {
             $smstr = $result * 2 + 1;
         }
-        $modul = Modul::where('semester', '=', $smstr)->get();
+        $modul = Flipbook::where('desc', '=', $smstr)->get();
         return view('dashboard', compact('modul'));
     } else {
         $user = User::where('level', '!=', 'mahasiswa')->where('level', '!=', 'superadmin')->get();
         $mahasiswa = Mahasiswa::all();
-        $modul = Modul::all();
+        $modul = Flipbook::all();
         return view('dashboard', compact('user', 'mahasiswa', 'modul'));
     }
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -37,7 +37,8 @@
                                 <td class="block sm:flex gap-2">
                                     <a href="{{ route('flipbook.show', $mdl->id) }}"
                                         class="px-3 py-1 bg-indigo-400 hover:bg-indigo-500 text-xs rounded shadow text-white border-none">Show</a>
-                                    <x-btn-edit href="{{ route('flipbook.edit', $mdl->id) }}" />
+                                    {{--
+                                    <x-btn-edit href="{{ route('flipbook.edit', $mdl->id) }}" /> --}}
                                     <x-btn-delete class="mt-2 sm:mt-0" method="POST"
                                         action="{{ route('flipbook.destroy', $mdl->id) }}" />
                                 </td>

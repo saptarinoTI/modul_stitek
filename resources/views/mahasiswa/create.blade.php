@@ -1,50 +1,58 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Data User') }}
+            {{ __('Tambah Data Mahasiswa') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <section class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form method="POST" action="{{ route('users.store') }}">
+                <form method="POST" action="{{ route('mahasiswa.store') }}">
                     @csrf
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                        <!-- Name -->
+                        <!-- NIM -->
                         <div>
-                            <x-input-label for="name" :value="__('Nama Lengkap')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                :value="old('name')" required autofocus />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            <x-input-label for="nim" :value="__('NIM Mahasiswa')" />
+                            <x-text-input id="nim" class="block mt-1 w-full" type="text" name="nim" :value="old('nim')"
+                                required autofocus />
+                            <x-input-error :messages="$errors->get('nim')" class="mt-2" />
                         </div>
 
-                        <!-- Email -->
+                        <!-- NAMA -->
                         <div>
-                            <x-input-label for="email" :value="__('Alamat Email')" />
-                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                                :value="old('email')" required autofocus />
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            <x-input-label for="nama" :value="__('Nama Lengkap')" />
+                            <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama"
+                                :value="old('nama')" required autofocus />
+                            <x-input-error :messages="$errors->get('nama')" class="mt-2" />
                         </div>
 
-                        <!-- Password -->
+                        <!-- KELAS -->
                         <div>
-                            <x-input-label for="password" :value="__('Kata Sandi')" />
-                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                :value="old('password')" required autofocus />
-                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        </div>
-
-                        <!-- Level -->
-                        <div>
-                            <x-input-label for="level" :value="__('Level')" />
-                            <x-text-select id="level" class="block mt-1 w-full" name="level" required>
-                                <option value="admin">Admin</option>
-                                <option value="laboran">Laboran</option>
+                            <x-input-label for="kelas" :value="__('kelas')" />
+                            <x-text-select id="kelas" class="block mt-1 w-full" name="kelas" required>
+                                <option value="sore">Sore</option>
+                                <option value="pagi">Pagi</option>
                             </x-text-select>
-                            <x-input-error :messages="$errors->get('level')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
                         </div>
 
+                        <!-- TTL -->
+                        <div>
+                            <x-input-label for="ttl" :value="__('Tempat Tanggal Lahir')" />
+                            <x-text-input id="ttl" class="block mt-1 w-full" type="text" name="ttl" :value="old('ttl')"
+                                required autofocus />
+                            <x-input-error :messages="$errors->get('ttl')" class="mt-2" />
+                        </div>
+                    </div>
+
+
+                    <!-- Alamat -->
+                    <div class="mt-3">
+                        <x-input-label for="alamat" :value="__('Alamat')" />
+                        <x-text-input id="alamat" class="block mt-1 w-full" type="text" name="alamat"
+                            :value="old('alamat')" required autofocus />
+                        <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
                     </div>
 
                     <div class="flex justify-end mt-6">

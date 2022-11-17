@@ -31,10 +31,11 @@ class FlipbookController extends Controller
         $image = array();
         if ($files = $request->file('image')) {
             foreach ($files as $file) {
-                $image_name = md5(rand(1000, 10000));
+                // $image_name = (rand(10, 100));
+                $image_name = strtolower($file->getClientOriginalName());
                 $ext = strtolower($file->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'multiple_image/';
+                $upload_path = 'modul/' . $request->book_name . '/';
                 $image_url = $upload_path . $image_full_name;
                 $file->move($upload_path, $image_full_name);
                 $image[] = $image_url;
@@ -46,7 +47,7 @@ class FlipbookController extends Controller
             'content' => implode(',', $image),
             'status' => 1,
         ]);
-        return back();
+        return redirect()->route('flipbook.index');
     }
 
     public function show($id)
@@ -56,34 +57,34 @@ class FlipbookController extends Controller
         return view('rudrarajiv.flipbooklaravel.showbook', compact('flipbook', 'content'));
     }
 
-    public function edit($id)
-    {
-        $flipbook = DB::table('flipbook')->where('id', $id)->get()[0];
-        $content = explode(",", $flipbook->content);
-        return view('flipbook::editbook', compact('flipbook', 'content'));
-    }
+    // public function edit($id)
+    // {
+    //     $flipbook = DB::table('flipbook')->where('id', $id)->get()[0];
+    //     $content = explode(",", $flipbook->content);
+    //     return view('flipbook::editbook', compact('flipbook', 'content'));
+    // }
 
-    public function update(Request $request, $id)
-    {
-        $fb = Flipbook::find($id);
-        $input = $request->all();
+    // public function update(Request $request, $id)
+    // {
+    //     $fb = Flipbook::find($id);
+    //     $input = $request->all();
 
-        $fb->content .= ",";
-        $i = 1;
-        foreach ($request->files as $uploadedFile) {
-            $filename  = time() . '_' . $i . '.' . $uploadedFile->getClientOriginalExtension();
-            $i++;
-            $file = $uploadedFile->move(public_path('rudra/fbook/pics/'), $filename);
-            $path = 'rudra/fbook/pics/' . $filename;
-            $fb->content .= $path . ",";
-        }
+    //     $fb->content .= ",";
+    //     $i = 1;
+    //     foreach ($request->files as $uploadedFile) {
+    //         $filename  = time() . '_' . $i . '.' . $uploadedFile->getClientOriginalExtension();
+    //         $i++;
+    //         $file = $uploadedFile->move(public_path('rudra/fbook/pics/'), $filename);
+    //         $path = 'rudra/fbook/pics/' . $filename;
+    //         $fb->content .= $path . ",";
+    //     }
 
-        $fb->content = rtrim($fb->content, ",");
-        $fb->name = $input['book_name'];
-        $fb->desc = $input['desc'];
-        $fb->save();
-        return Redirect::route('flipbook.index');
-    }
+    //     $fb->content = rtrim($fb->content, ",");
+    //     $fb->name = $input['book_name'];
+    //     $fb->desc = $input['desc'];
+    //     $fb->save();
+    //     return Redirect::route('flipbook.index');
+    // }
 
     public function destroy($id)
     {
