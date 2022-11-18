@@ -29,19 +29,21 @@ class FlipbookController extends Controller
     public function store(Request $request)
     {
         // $image = array();
-        $files = $request->file('image');
-        // if ($files = $request->file('image')) {
-        foreach ($files as $file) {
-            $image_name = 'mdl-' . (rand(100, 1000));
-            // $image_name = strtolower($file->getClientOriginalName());
-            $ext = strtolower($file->getClientOriginalExtension());
-            $image_full_name = $image_name . '.' . $ext;
-            $upload_path = 'modul/';
-            $image_url = $upload_path . $image_full_name;
-            $file->move($upload_path, $image_full_name);
-            $image[] = $image_url;
+        // $files = $request->file('image');
+        $namemodul = str_replace(' ', '', strtolower($request->book_name));
+        if ($files = $request->file('image')) {
+            foreach ($files as $file) {
+                // $image_name = 'mdl-' . (rand(100, 1000));
+                $image_name = $namemodul . '-' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                // $image_name = strtolower($file->getClientOriginalName());
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+                $upload_path = 'modul/';
+                $image_url = $upload_path . $image_full_name;
+                $file->move($upload_path, $image_full_name);
+                $image[] = $image_url;
+            }
         }
-        // }
         Flipbook::insert([
             'name' => $request->book_name,
             'desc' => $request->desc,
