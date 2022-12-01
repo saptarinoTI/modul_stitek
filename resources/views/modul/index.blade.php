@@ -5,9 +5,9 @@
                 {{ __('Data Modul') }}
             </h2>
             @if (auth()->user()->level != 'mahasiswa')
-            <a href="{{ route('flipbook.create') }}"
-                class="mt-2 sm:mt-0 text-sm bg-blue-600 px-3 py-2 rounded shadow border-none text-white">Tambah
-                Modul</a>
+                <a href="{{ route('flipbook.create') }}"
+                    class="mt-2 sm:mt-0 text-sm bg-blue-600 px-3 py-2 rounded shadow border-none text-white">Tambah
+                    Modul</a>
             @endif
         </div>
     </x-slot>
@@ -31,18 +31,20 @@
                         </thead>
                         <tbody>
                             @foreach ($flipbooks as $mdl)
-                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                <x-td-table>{{ ucwords($mdl->name) }}</x-td-table>
-                                <x-td-table>{{ ucwords($mdl->desc) }}</x-td-table>
-                                <td class="block sm:flex gap-2">
-                                    <a href="{{ route('flipbook.show', $mdl->id) }}"
-                                        class="px-3 py-1 bg-indigo-400 hover:bg-indigo-500 text-xs rounded shadow text-white border-none">Show</a>
-                                    {{--
+                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <x-td-table>{{ ucwords($mdl->name) }}</x-td-table>
+                                    <x-td-table>{{ ucwords($mdl->desc) }}</x-td-table>
+                                    <td class="block sm:flex gap-2">
+                                        <a href="{{ route('flipbook.show', $mdl->id) }}"
+                                            class="px-3 py-1 bg-indigo-400 hover:bg-indigo-500 text-xs rounded shadow text-white border-none">Show</a>
+                                        {{--
                                     <x-btn-edit href="{{ route('flipbook.edit', $mdl->id) }}" /> --}}
-                                    <x-btn-delete class="mt-2 sm:mt-0" method="POST"
-                                        action="{{ route('flipbook.destroy', $mdl->id) }}" />
-                                </td>
-                            </tr>
+                                        @if (auth()->user()->level != 'mahasiswa')
+                                            <x-btn-delete class="mt-2 sm:mt-0" method="POST"
+                                                action="{{ route('flipbook.destroy', $mdl->id) }}" />
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

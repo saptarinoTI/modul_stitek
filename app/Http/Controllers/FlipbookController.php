@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Flipbook;
+use App\Models\Mahasiswa;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
@@ -16,8 +18,24 @@ class FlipbookController extends Controller
 {
     public function index()
     {
-        $flipbooks = Flipbook::where('status', '1')->get();
-        return view('modul.index', compact('flipbooks'));
+        if (auth()->user()->level == 'mahasiswa') {
+            $year = date('Y');
+            $month = date('m');
+            $mhs = auth()->user();
+            $nim = substr($mhs->username, 0, 4);
+            $result = (int)$year - (int)$nim;
+            if ($month >= 1 && $month <= 6) {
+                if ($result == 0) {
+                    $smstr = 2;
+                } else {
+                    $smstr = $result * 2;
+                }
+            } elseif ($month >= 7 && $month <= 12) {
+                $smstr = $result * 2 + 1;
+            }
+            $flipbooks = Flipbook::where('desc', '<=', $smstr)->get();
+            return view('modul.index', compact('flipbooks'));
+        }
     }
 
     public function create()
