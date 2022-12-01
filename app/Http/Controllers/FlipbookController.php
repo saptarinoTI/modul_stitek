@@ -35,6 +35,9 @@ class FlipbookController extends Controller
             }
             $flipbooks = Flipbook::where('desc', '<=', $smstr)->get();
             return view('modul.index', compact('flipbooks'));
+        } else {
+            $flipbooks = Flipbook::all();
+            return view('modul.index', compact('flipbooks'));
         }
     }
 
